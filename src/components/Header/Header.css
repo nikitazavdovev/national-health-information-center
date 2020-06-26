@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 0 65px 0 52px;
+  background-color: #fff;
+  height: 108px;
+  min-height: 108px;
+  box-shadow: 0 1px 0 0 #BABCBE;
+}
+.header__btn {
+  border-radius: 4px;
+  padding: 0 15px;
+  height: 30px;
+  color: var(--main-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+.header__logout {
+  margin-left: auto;
+  position: relative;
+  margin-right: 1px;
+}
+.header__logout:after {
+  content: '';
+  position: absolute;
+  display: block;
+  height: 80%;
+  width: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 100%;
+  background-color: grey;
+}

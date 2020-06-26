@@ -1,0 +1,18 @@
+.navbar-item {
+
+}
+.navbar-item__link {
+  display: flex;
+  align-items: center;
+  padding: 20px 0 20px 36px;
+  text-decoration: none;
+  color: #fff;
+}
+.navbar-item__link.active {
+  background-color: rgba(57, 76, 168, 0.5);
+  box-shadow: inset 10px 0 0 0 var(--secondary-color);
+}
+.navbar-item__title {
+  margin: 0 0 0 20px;
+  font-size: 15px;
+}
