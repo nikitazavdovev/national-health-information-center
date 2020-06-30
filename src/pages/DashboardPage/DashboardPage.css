@@ -1,15 +1,38 @@
 .dashboard-content {
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 .dashboard-tiles {
-  width: 40%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 .dashboard-charts {
-  flex-grow: 1;
   display: flex;
-  margin-left: 53px;
+  flex-grow: 1;
+  margin-top: 20px;
+}
+
+@media (min-width: 1200px) {
+  .dashboard-content {
+    flex-direction: row;
+  }
+  .dashboard-tiles {
+    width: 55%;
+    min-width: 55%;
+  }
+  .dashboard-charts {
+    margin-left: 20px;
+    margin-top: 0;
+  }
+}
+@media (min-width: 1600px) {
+  .dashboard-tiles {
+    width: 40%;
+    min-width: 40%;
+  }
+  .dashboard-charts {
+    margin-left: 53px;
+  }
 }

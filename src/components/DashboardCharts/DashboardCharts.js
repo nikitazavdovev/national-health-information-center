@@ -1,5 +1,5 @@
 import React from "react";
-import {Bar, BarChart, Pie, PieChart, Cell, XAxis, Legend, Label} from "recharts";
+import {Bar, BarChart, Pie, PieChart, Cell, XAxis, Legend, Label, ResponsiveContainer} from "recharts";
 
 import './DashboardCharts.css';
 
@@ -60,7 +60,6 @@ const DashboardCharts = (props) => {
     }, 0)
   };
   const generatePieChartLabel = (props) => {
-    console.log(props)
     const {viewBox} = props;
 
     return (
@@ -91,31 +90,39 @@ const DashboardCharts = (props) => {
     <div className='charts'>
       <div className='charts__first'>
         <h4 className='charts__title'>ICD10</h4>
-        <BarChart width={240} height={250} data={firstData} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
-          <XAxis dataKey="name" tickLine={false} tick={customizedTick}/>
-          <Bar dataKey="value" label={{ position: 'top', fill: '#BABCBE', fontSize: 15, fontWeight: 700}} shape={<RoundedBar />} barSize={40}>
-            {
-              firstData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]}/>
-              ))
-            }
-          </Bar>
-        </BarChart>
+        <div className="charts__data">
+          <ResponsiveContainer width='100%' height={250}>
+            <BarChart data={firstData} margin={{top: 20, right: 30, left: 20, bottom: 5}}>
+              <XAxis dataKey="name" tickLine={false} tick={customizedTick}/>
+              <Bar dataKey="value" label={{ position: 'top', fill: '#BABCBE', fontSize: 15, fontWeight: 700}} shape={<RoundedBar />} barSize={40}>
+                {
+                  firstData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={colors[index]}/>
+                  ))
+                }
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
       <div className='charts__last'>
         <h4 className='charts__title'>Number of pending request </h4>
-        <PieChart width={300} height={200}>
-          <Legend layout="vertical" align='right' verticalAlign='middle' content={renderLegend}/>
+        <div className="charts__data">
+          <ResponsiveContainer width='100%' height={200}>
+            <PieChart>
+              <Legend layout="vertical" align='right' verticalAlign='middle' content={renderLegend}/>
 
-          <Pie data={secondData} datakey='value' innerRadius={82} outerRadius={100} startAngle={90} endAngle={-270}>
-            {
-              secondData.map((item, index) =>
-                <Cell fill={colors[index]} key={item.value} stroke={colors[index]}/>
-              )
-            }
-            <Label position="center" content={generatePieChartLabel}/>
-          </Pie>
-          </PieChart>
+              <Pie data={secondData} dataKey='value' innerRadius='82%' outerRadius='100%' startAngle={90} endAngle={-270}>
+                {
+                  secondData.map((item, index) =>
+                    <Cell fill={colors[index]} key={item.value} stroke={colors[index]}/>
+                  )
+                }
+                <Label position="center" content={generatePieChartLabel}/>
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   )

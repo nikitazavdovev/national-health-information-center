@@ -41,7 +41,7 @@ function Navbar(props) {
   ];
 
   return (
-    <aside className="navbar">
+    <aside className={`navbar ${props.isMenuOpen ? 'open' : ''}`}>
       <h2 className="navbar__header">Terminology System</h2>
       <ul className='navbar__list'>
         {listItems.map(item =>

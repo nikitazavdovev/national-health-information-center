@@ -16,3 +16,20 @@
   margin: 0 0 0 20px;
   font-size: 15px;
 }
+@media (min-width: 768px) {
+  .navbar-item__link {
+    padding: 15px 0 15px 20px;
+  }
+  .navbar-item__title {
+    margin: 0 0 0 15px;
+  }
+}
+@media (min-width: 1400px) {
+  .navbar-item__link {
+    padding: 20px 0 20px 36px;
+  }
+  .navbar-item__title {
+    margin: 0 0 0 20px;
+    font-size: inherit;
+  }
+}

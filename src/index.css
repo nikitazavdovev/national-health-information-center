@@ -1,9 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+}
 body {
   margin: 0;
   font-family: 'DINNextLTArabic', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 code {
@@ -111,4 +117,7 @@ button {
 }
 .icon-search:before {
   content: "\e907";
+}
+.icon-menu1:before {
+  content: "\e9bd";
 }

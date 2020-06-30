@@ -1,11 +1,21 @@
 .navbar {
+  position: absolute;
+  display: flex;
   width: 298px;
   min-width: 298px;
-  display: flex;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
   flex-direction: column;
   background: var(--main-color) url("../../assets/images/navbar_bg.svg");
   background-size: cover;
-  padding: 56px 0 48px;
+  padding: 20px 0;
+  top: 0;
+  left: -100%;
+  z-index: 999;
+  transition: all .5s ease;
+}
+.navbar.open {
+  left: 0;
 }
 .navbar__header {
   color: #fff;
@@ -31,4 +41,20 @@
 }
 .navbar__powered img {
   filter: brightness(0) invert(1);
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    position: static;
+    height: auto;
+    width: 198px;
+    min-width: 198px;
+  }
+}
+@media (min-width: 1400px) {
+  .navbar {
+    width: 298px;
+    min-width: 298px;
+    padding: 56px 0 48px;
+  }
 }

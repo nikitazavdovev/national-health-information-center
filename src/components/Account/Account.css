@@ -1,5 +1,5 @@
 .account {
-  display: flex;
+  display: none;
   align-items: center;
   margin-left: 15px;
   color: var(--main-color);
@@ -20,4 +20,9 @@
   border: 1px solid var(--main-color);
   margin-left: 14px;
   font-size: 19px;
+}
+@media (min-width: 768px) {
+  .account {
+    display: flex;
+  }
 }

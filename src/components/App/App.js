@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 
 import './App.css';
@@ -12,37 +12,54 @@ import PendingRequestsPage from "../../pages/PendingRequestsPage/PendingRequests
 import ReportsPage from "../../pages/ReportsPage/ReportsPage";
 import UserManagementPage from "../../pages/UserManagementPage/UserManagementPage";
 import SearchPage from "../../pages/SearchPage/SearchPage";
+import LoginPage from "../../pages/LoginPage/LoginPage";
 
 function App() {
+
+  let [isMenuOpen, setMenuIsOpen] = useState(false);
+
+  const menuToggle = () => {
+    setMenuIsOpen(isMenuOpen = !isMenuOpen);
+  };
+
   return (
     <div className="App">
-      <Header />
-      <main className='main'>
-        <Navbar />
-        <Switch>
-          <Route path='/dashboard'>
-            <DashboardPage />
-          </Route>
-          <Route path='/code-managements'>
-            <CodeManagementsPage />
-          </Route>
-          <Route path='/pending-requests'>
-            <PendingRequestsPage />
-          </Route>
-          <Route path='/reports'>
-            <ReportsPage />
-          </Route>
-          <Route path='/user-management'>
-            <UserManagementPage />
-          </Route>
-          <Route path='/search'>
-            <SearchPage />
-          </Route>
-          <Route path='/'>
-            <Redirect to='/dashboard'/>
-          </Route>
-        </Switch>
-      </main>
+      <Switch>
+        <Route path='/login'>
+          <LoginPage />
+        </Route>
+        <Route path='/'>
+          <Header menuToggle={menuToggle}/>
+          <main className='main'>
+            <Navbar isMenuOpen={isMenuOpen}/>
+            <div className={`page-content ${isMenuOpen ? 'menu-opened' : ''}`}>
+              <Switch>
+                <Route path='/dashboard'>
+                  <DashboardPage />
+                </Route>
+                <Route path='/code-managements'>
+                  <CodeManagementsPage />
+                </Route>
+                <Route path='/pending-requests'>
+                  <PendingRequestsPage />
+                </Route>
+                <Route path='/reports'>
+                  <ReportsPage />
+                </Route>
+                <Route path='/user-management'>
+                  <UserManagementPage />
+                </Route>
+                <Route path='/search'>
+                  <SearchPage />
+                </Route>
+                <Route path='/'>
+                  <Redirect to='/dashboard'/>
+                </Route>
+              </Switch>
+            </div>
+          </main>
+        </Route>
+      </Switch>
     </div>
   );
 }
