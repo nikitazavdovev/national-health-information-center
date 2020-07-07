@@ -5,46 +5,14 @@ import './Navbar.css';
 import NavbarItem from "../NavbarItem/NavbarItem";
 
 import poweredByLogo from '../../assets/images/poweredBy_logo.png';
+import {connect} from "react-redux";
 
-function Navbar(props) {
-  const listItems = [
-    {
-      title: 'Dashboard',
-      icon: 'menu',
-      link: '/dashboard'
-    },
-    {
-      title: 'Code Managements',
-      icon: 'settings',
-      link: '/code-managements'
-    },
-    {
-      title: 'Pending Request',
-      icon: 'notification',
-      link: '/pending-requests'
-    },
-    {
-      title: 'Reports',
-      icon: 'bars',
-      link: '/reports'
-    },
-    {
-      title: 'User Management',
-      icon: 'user',
-      link: '/user-management'
-    },
-    {
-      title: 'Search',
-      icon: 'search',
-      link: '/search'
-    }
-  ];
-
+function Navbar({isMenuOpen, menuItems}) {
   return (
-    <aside className={`navbar ${props.isMenuOpen ? 'open' : ''}`}>
+    <aside className={`navbar ${isMenuOpen ? 'open' : ''}`}>
       <h2 className="navbar__header">Terminology System</h2>
       <ul className='navbar__list'>
-        {listItems.map(item =>
+        {menuItems.map(item =>
           <NavbarItem item={item} key={item.title}/>
         )}
       </ul>
@@ -56,4 +24,11 @@ function Navbar(props) {
   )
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    isMenuOpen: state.menu.isMainMenuOpen,
+    menuItems: state.menu.menuItems
+  }
+};
+
+export default connect(mapStateToProps, null)(Navbar);

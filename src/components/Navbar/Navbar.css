@@ -11,7 +11,7 @@
   padding: 20px 0;
   top: 0;
   left: -100%;
-  z-index: 999;
+  z-index: 998;
   transition: all .5s ease;
 }
 .navbar.open {

@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'DINNextLTArabic', sans-serif;
 }
 html {
   height: 100%;
@@ -120,4 +121,13 @@ button {
 }
 .icon-menu1:before {
   content: "\e9bd";
+}
+.icon-plus:before {
+  content: "\ea0a";
+}
+.icon-microsoftexcel:before {
+  content: "\e908";
+}
+.icon-arrow:before {
+  content: "\e909";
 }

@@ -1,0 +1,22 @@
+.drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #F7F7F7;
+  border: 1px dashed #BABCBE;
+  border-radius: 10px;
+  color: #BABCBE;
+  padding: 20px 0;
+  cursor: pointer;
+  transition: .3s all;
+}
+.drop-zone:hover,
+.drop-zone.drag-active{
+  border-color: var(--main-color);
+  color: var(--main-color);
+}
+.drop-zone p {
+  margin: 0;
+}
