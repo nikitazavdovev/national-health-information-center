@@ -1,4 +1,4 @@
-.login {
+.auth {
   background: var(--main-color) url("../../assets/images/navbar_bg.svg");
   /*background-size: cover;*/
   height: 100%;
@@ -7,7 +7,7 @@
   align-items: center;
 
 }
-.login__block {
+.auth__block {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,15 +18,19 @@
   border-radius: 16px;
   padding: 30px;
 }
-.login__logo {
+.auth__logo {
   width: 100%;
   height: auto;
 }
-.login__form {
-  width: 100%;
-  margin-top: 20px;
+.auth__title {
+  color: var(--main-color);
+  margin: 20px 0 0;
+  font-size: 18px;
 }
-.login__input {
+.auth__form {
+  width: 100%;
+}
+.auth__input {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
@@ -43,14 +47,14 @@
   padding-left: 10px;
   border-radius: 6px;
 }
-.login__remember {
+.auth__remember {
   margin-top: 10px;
   display: inline-block;
   cursor: pointer;
   font-size: 14px;
   color: #767676;
 }
-.login__submit {
+.auth__submit {
   display: block;
   text-align: center;
   padding: 20px;
@@ -63,7 +67,7 @@
   font-weight: 600;
 }
 @media (min-width: 768px) {
-  .login__block {
+  .auth__block {
     width: 400px;
     padding: 30px 48px 56px;
   }

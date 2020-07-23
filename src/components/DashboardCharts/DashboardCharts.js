@@ -6,7 +6,7 @@ import './DashboardCharts.css';
 const DashboardCharts = (props) => {
   const firstData = [
     {
-      name: 'Stander',
+      name: 'Standard',
       value: 152
     },
     {
@@ -34,7 +34,7 @@ const DashboardCharts = (props) => {
   const customizedTick = (props) => {
     const { payload, x, y, index, height } = props;
     return (
-      <text x={x - 26} y={y + height/2} fill={colors[index]} fontSize={15} fontWeight={700} >
+      <text x={x - 28} y={y + height/2} fill={colors[index]} fontSize={15} fontWeight={700} >
         {payload.value}
       </text>
     );

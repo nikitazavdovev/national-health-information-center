@@ -1,0 +1,19 @@
+.status {
+  cursor: default;
+}
+.status__text {
+  border-radius: 14px;
+  padding: 3px 10px;
+}
+.status__text--1 {
+  background-color: #DBFDE3;
+  color: #118814;
+}
+.status__text--2 {
+  background-color: #E7F4FD;
+  color: #3651A7;
+}
+.status__text--0 {
+  background-color: #E2E2E2;
+  color: #3D3E3F;
+}

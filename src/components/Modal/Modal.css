@@ -1,10 +1,6 @@
 .modal {
   display: flex;
   flex-direction: column;
-  /*position: absolute;*/
-  /*left: 50%;*/
-  /*top: 50%;*/
-  /*transform: translate(-50%, -50%);*/
   margin: 20px 10px;
   max-width: 700px;
   background: rgb(255, 255, 255);
@@ -22,12 +18,23 @@
   font-size: 20px;
   font-weight: 700;
   height: 65px;
+  position: relative;
+}
+.modal__close {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
 }
 .modal__body {
   flex-grow: 1;
-  padding: 14px 14px 40px 14px;
+  padding: 14px 14px 0 14px;
 }
 .modal__footer {
+  margin-top: 40px;
   padding: 0 14px;
 }
 .modal__footer__buttons {
@@ -43,7 +50,7 @@
 
 @media (min-width: 425px) {
   .modal__body {
-    padding: 14px 48px 40px 48px;
+    padding: 14px 48px 0 48px;
   }
   .modal__footer {
     padding: 0 48px;

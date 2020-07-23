@@ -2,13 +2,14 @@ import React from "react";
 
 import './Button.css';
 
-const Button = (props) => {
+const Button = ({light, onClick, disabled = false, children}) => {
   return (
     <button
-      className={`button ${props.light ? 'button--light' : ''}`}
-      onClick={() => props.onClick()}
+      className={`button ${light ? 'button--light' : ''}`}
+      onClick={() => onClick()}
+      disabled={disabled}
     >
-      {props.children}
+      {children}
     </button>
   )
 };

@@ -6,7 +6,7 @@ import {Bar, Cell, XAxis} from "recharts";
 const BarChart = (props) => {
   const firstData = [
     {
-      name: 'Stander',
+      name: 'Standard',
       value: 152
     },
     {

@@ -1,0 +1,23 @@
+.version-dropdown {
+  width: 120px;
+}
+.version-dropdown__body {
+  height: 50px;
+  border: 1px solid var(--main-color);
+  padding: 0 23px 0 28px;
+  border-radius: 4px;
+}
+.table__controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: flex-end;
+}
+.filter-buttons > * {
+  margin-left: 10px;
+}
+.search-field {
+  flex-grow: 1;
+  height: 50px;
+  max-width: 500px;
+}

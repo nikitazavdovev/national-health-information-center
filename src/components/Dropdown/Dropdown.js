@@ -1,5 +1,6 @@
 // TODO: finish multiselect
 import React, {useEffect, useRef, useState} from "react";
+import {isObjectEmpty} from '../../utils/helpers';
 
 import './Dropdown.css';
 
@@ -7,18 +8,18 @@ const Dropdown = (
   {
     placeholder = '',
     list = [],
-    multiSelect = false,
     dropDownClassName,
     wrapClassName,
     titleClassName,
     title,
     required,
-    name,
-    onSelect
+    onSelect,
+    selected = {},
+    name
   }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selection, setSelection] = useState([]);
   const ref = useRef();
+
 
   useOnClickOutside(ref, () => setIsOpen(false));
 
@@ -27,31 +28,23 @@ const Dropdown = (
   };
 
   const handleOnClick = (item) => {
-    if(!selection.some(current => current.id === item.id)) {
-      if(!multiSelect) {
-        onSelect(name, item.value);
-        setSelection([item]);
-        toggleDropdown();
-      } else {
-        setSelection([...selection, item])
-      }
+    if(selected.id !== item.id) {
+      onSelect({name, value: item});
+      toggleDropdown();
     }
-//If you want to unsellect items in list
-    // else {
-    //   setSelection(selection.filter(selectedItem => selectedItem.id !== item.id))
-    // }
   };
 
   const isItemSelected = (item) => {
-    return selection.find(current => current.id === item.id)
+    return selected.id === item.id
   };
-
   return (
     <div className={wrapClassName}>
-      <div className={titleClassName}>
-        {title}
-        {required && <span>*</span>}
-      </div>
+      {title &&
+        <div className={titleClassName}>
+          {title}
+          {required && <span>*</span>}
+        </div>
+      }
       <div className='dd-wrapper' ref={ref}>
         <div
           className={`dd-header ${isOpen ? 'opened' : ''} ${dropDownClassName}`}
@@ -60,14 +53,12 @@ const Dropdown = (
           role='button'
           tabIndex='0'
         >
-          {placeholder && !selection.length > 0 &&
+          {placeholder && isObjectEmpty(selected) &&
           <div className="dd-header__placeholder">{placeholder}</div>
           }
-          {selection.length > 0 &&
+          {!isObjectEmpty(selected) &&
           <div className="dd-header__title">
-            {selection.map(item => (
-              <span key={item.id}>{item.value}</span>
-            ))}
+              <span key={selected.id}>{selected.value}</span>
           </div>
           }
           <div className='dd-header__action'>
@@ -79,7 +70,7 @@ const Dropdown = (
             {list.map(item => (
               <li
                 className={`dd-list-item ${isItemSelected(item) ? 'selected' : ''}`}
-                key={item.id}
+                key={item.id || item.value}
                 onClick={() => handleOnClick(item)}
               >
                 <span>{item.value}</span>

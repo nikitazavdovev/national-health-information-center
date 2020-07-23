@@ -9,6 +9,11 @@
   line-height: 1em;
   text-align: center;
   width: 50%;
+  transition: 0.3s;
+}
+.button[disabled] {
+  opacity: 0.3;
+  cursor: default;
 }
 .button--light {
   color: var(--main-color);

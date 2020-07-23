@@ -7,16 +7,39 @@ import {BrowserRouter} from "react-router-dom";
 import {compose, createStore} from "redux";
 import {Provider} from 'react-redux';
 import {rootReducer} from "./store/rootReducer";
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from "./components/AlertTemplate/AlertTemplate";
+import {loadState, saveState} from "./utils/localStorage";
 
-const store = createStore(rootReducer, compose(
+const persistedState = loadState();
+const store = createStore(rootReducer, persistedState ,compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ));
+
+store.subscribe(() => {
+  //TODO: prevent saving every time
+  saveState({
+    user: store.getState().user
+  })
+});
+
+const alertOptions = {
+  position: positions.TOP_CENTER,
+  timeout: 5000,
+  offset: '30px',
+  transition: transitions.SCALE,
+  containerStyle: {
+    zIndex: 999
+  }
+};
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <AlertProvider template={AlertTemplate} {...alertOptions}>
+          <App />
+        </AlertProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

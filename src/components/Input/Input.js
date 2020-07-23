@@ -42,10 +42,11 @@ const Input = (
 
   return (
     <div className={wrapClassName}>
+      {title &&
       <label htmlFor={id} className={titleClassName}>
         {title}
         {required && <span>*</span>}
-      </label>
+      </label>}
       {type === "textarea" ? (
         <textarea {...fieldProps} />
       ) : (

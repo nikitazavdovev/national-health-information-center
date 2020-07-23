@@ -7,7 +7,7 @@ const Modal = (props) => {
 
   const modalStyle = {
     overlay: {
-      zIndex: 999,
+      zIndex: 998,
       backgroundColor: 'rgba(0, 0, 0, 0.3)',
       display: 'flex',
       alignItems: 'flex-start',

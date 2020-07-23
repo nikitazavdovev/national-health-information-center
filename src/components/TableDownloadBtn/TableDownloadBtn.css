@@ -1,0 +1,21 @@
+.popover {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid var(--main-color);
+  border-radius: 20px;
+  color: var(--main-color);
+  text-decoration: none;
+}
+.popover h3 {
+  margin: 0;
+  color: var(--secondary-color);
+}
+.popover a {
+  text-decoration: none;
+  color: inherit;
+}
+.popover a:hover {
+  text-decoration: underline;
+}

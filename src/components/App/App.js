@@ -7,15 +7,16 @@ import Header from "../Header/Header";
 import Navbar from "../Navbar/Navbar";
 
 import DashboardPage from "../../pages/DashboardPage/DashboardPage";
-import CodeManagementsPage from "../../pages/CodeManagementsPage/CodeManagementsPage";
+import TerminologyManagementsPage from "../../pages/TerminologyManagementsPage/TerminologyManagementsPage";
 import PendingRequestsPage from "../../pages/PendingRequestsPage/PendingRequestsPage";
 import ReportsPage from "../../pages/ReportsPage/ReportsPage";
 import UserManagementPage from "../../pages/UserManagementPage/UserManagementPage";
 import SearchPage from "../../pages/SearchPage/SearchPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
+import NationalTerminologiesPage from "../../pages/NationalTerminologiesPage/NationalTerminologiesPage";
+import {connect} from "react-redux";
 
-function App() {
-
+const App = ({isUserLoggedIn, userRole}) => {
   let [isMenuOpen, setMenuIsOpen] = useState(false);
 
   const menuToggle = () => {
@@ -28,35 +29,41 @@ function App() {
         <Route path='/login'>
           <LoginPage />
         </Route>
+        {!isUserLoggedIn && <Redirect to={'/login'} />}
         <Route path='/'>
           <Header menuToggle={menuToggle}/>
           <main className='main'>
             <Navbar isMenuOpen={isMenuOpen}/>
-            <div className={`page-content ${isMenuOpen ? 'menu-opened' : ''}`}>
-              <Switch>
-                <Route path='/dashboard'>
-                  <DashboardPage />
-                </Route>
-                <Route path='/code-managements'>
-                  <CodeManagementsPage />
-                </Route>
-                <Route path='/pending-requests'>
-                  <PendingRequestsPage />
-                </Route>
-                <Route path='/reports'>
-                  <ReportsPage />
-                </Route>
-                <Route path='/user-management'>
-                  <UserManagementPage />
-                </Route>
-                <Route path='/search'>
-                  <SearchPage />
-                </Route>
-                <Route path='/'>
-                  <Redirect to='/dashboard'/>
-                </Route>
-              </Switch>
-            </div>
+              <div className={`page-content ${isMenuOpen ? 'menu-opened' : ''}`}>
+                <Switch>
+                  <Route path='/dashboard'>
+                    <DashboardPage />
+                  </Route>
+                  {userRole !== 'admin' &&
+                    <Route path='/national-terminologies'>
+                      <NationalTerminologiesPage />
+                    </Route>
+                  }
+                  <Route path='/terminology-managements'>
+                    <TerminologyManagementsPage />
+                  </Route>
+                  <Route path='/pending-requests'>
+                    <PendingRequestsPage />
+                  </Route>
+                  <Route path='/reports'>
+                    <ReportsPage />
+                  </Route>
+                  <Route path='/user-management'>
+                    <UserManagementPage />
+                  </Route>
+                  <Route path='/search'>
+                    <SearchPage />
+                  </Route>
+                  <Route path='/'>
+                    <Redirect to='/dashboard'/>
+                  </Route>
+                </Switch>
+              </div>
           </main>
         </Route>
       </Switch>
@@ -64,4 +71,11 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isUserLoggedIn: state.user.isLoggedIn,
+    userRole: state.user.role
+  }
+};
+
+export default connect(mapStateToProps, null)(App);

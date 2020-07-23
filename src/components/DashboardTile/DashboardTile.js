@@ -10,7 +10,7 @@ const DashboardTile = (props) => {
      <span className={`tile__icon icon-${props.tile.icon}`} />
      <h3 className='tile__title'>
        {props.tile.title}
-       {props.tile.notification &&
+       {props.tile.notification >= 1 &&
         <span className='tile__notification'>{props.tile.notification}</span>
        }
      </h3>

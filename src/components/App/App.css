@@ -52,9 +52,37 @@
   margin-bottom: 50px;
 }
 .page__right-btn {
-  position: absolute;
-  right: 0;
-  top: 0;
+  text-align: right;
+}
+.page__right-btn .button {
+  width: auto;
+}
+.page__table-wrap {
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 10px 75px;
+  overflow-x: auto;
+}
+.page__message {
+  margin-top: 20px;
+  /*background: #ffffff;*/
+  /*border-radius: 20px;*/
+  padding: 40px 10px 75px;
+  width: 100%;
+  color: var(--secondary-color);
+}
+@media (min-width: 992px) {
+  .page__right-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: center;
+  }
+  .page__table-wrap {
+    margin-top: 50px;
+    padding: 40px 195px 75px;
+  }
 }
 @media (min-width: 1200px) {
   .main {

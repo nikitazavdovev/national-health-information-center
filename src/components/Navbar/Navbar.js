@@ -7,7 +7,47 @@ import NavbarItem from "../NavbarItem/NavbarItem";
 import poweredByLogo from '../../assets/images/poweredBy_logo.png';
 import {connect} from "react-redux";
 
-function Navbar({isMenuOpen, menuItems}) {
+const Navbar = ({isMenuOpen, userRole}) => {
+  const menuItems = [
+    {
+      title: 'Dashboard',
+      icon: 'menu',
+      link: '/dashboard'
+    },
+    {
+      title: 'Terminology Managements',
+      icon: 'settings',
+      link: '/terminology-managements'
+    },
+    {
+      title: 'Pending Request',
+      icon: 'notification',
+      link: '/pending-requests'
+    },
+    {
+      title: 'Reports',
+      icon: 'bars',
+      link: '/reports'
+    },
+    {
+      title: 'User Management',
+      icon: 'user',
+      link: '/user-management'
+    },
+    {
+      title: 'Search',
+      icon: 'search',
+      link: '/search'
+    }
+  ];
+
+  if(userRole !== 'admin') menuItems.splice(1, 0,
+    {
+      title: 'National Terminologies',
+      icon: 'sphere',
+      link: '/national-terminologies'
+    },);
+
   return (
     <aside className={`navbar ${isMenuOpen ? 'open' : ''}`}>
       <h2 className="navbar__header">Terminology System</h2>
@@ -22,12 +62,12 @@ function Navbar({isMenuOpen, menuItems}) {
       </div>
     </aside>
   )
-}
+};
 
 const mapStateToProps = state => {
   return {
     isMenuOpen: state.menu.isMainMenuOpen,
-    menuItems: state.menu.menuItems
+    userRole: state.user.role
   }
 };
 

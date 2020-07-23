@@ -5,9 +5,9 @@ import XLSX from 'xlsx';
 import './DropZone.css';
 import dropZoneImg from '../../assets/images/dropZone.svg';
 
-const DropZone = ({onFileDrop, name, wrapClassName}) => {
+const DropZone = ({onFileDrop, onDataParse, name, wrapClassName}) => {
   const onDrop = useCallback(acceptedFiles => {
-    onFileDrop(name, acceptedFiles);
+    onFileDrop(acceptedFiles);
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
       const rABS = !!reader.readAsBinaryString;
@@ -23,7 +23,7 @@ const DropZone = ({onFileDrop, name, wrapClassName}) => {
         /* Convert array of arrays */
         const data = XLSX.utils.sheet_to_json(ws);
         /* Update state */
-        console.log(JSON.stringify(data, null, 2));
+        onDataParse(data);
       };
       if (rABS) {
         reader.readAsBinaryString(file);
