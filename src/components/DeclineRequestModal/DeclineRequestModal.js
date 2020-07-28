@@ -1,17 +1,40 @@
 import React, {useState} from "react";
 import Button from "../Button/Button";
 import Modal from "../Modal/Modal";
-import {closeDeclineRequestModal} from "../../store/actions";
+import {closeDeclineRequestModal, updatePendingRequest} from "../../store/actions";
 import {connect} from "react-redux";
+import {useAlert} from "react-alert";
 
 import './DeclineRequestModal.css';
 import Input from "../Input/Input";
+import {useHistory} from "react-router-dom";
 
-const DeclineRequestModal = ({isModalOpen, closeModal}) => {
+const DeclineRequestModal = ({isModalOpen, closeModal, code, updateRequest, user}) => {
   const [message, changeMessageValue] = useState('');
+  let history = useHistory();
+
+  const alert = useAlert();
 
   const onInputChange = (event) => {
     changeMessageValue(event.target.value)
+  };
+
+  const onDecline = () => {
+    if(!message) {
+      alert.show('Please, provide a message', {
+        type: 'error',
+        timeout: 3000,
+      });
+    } else {
+      updateRequest({
+        ...code,
+        requestType: {code: 0, message: 'Mapping Declined'},
+        user,
+        message
+      });
+      closeModal();
+      history.push('/pending-requests')
+    }
   };
 
   return (
@@ -38,7 +61,7 @@ const DeclineRequestModal = ({isModalOpen, closeModal}) => {
       <div className="modal__footer">
         <div className='modal__footer__buttons'>
           <Button light onClick={closeModal}>Cancel</Button>
-          <Button onClick={closeModal}>Confirm declining</Button>
+          <Button onClick={onDecline}>Confirm declining</Button>
         </div>
       </div>
     </Modal>
@@ -47,12 +70,14 @@ const DeclineRequestModal = ({isModalOpen, closeModal}) => {
 
 const mapStateToProps = state => {
   return {
-    isModalOpen: state.modal.isDeclineRequestModalOpen
+    isModalOpen: state.modal.isDeclineRequestModalOpen,
+    user: state.user
   }
 };
 
 const mapDispatchToProps = {
-  closeModal: closeDeclineRequestModal
+  closeModal: closeDeclineRequestModal,
+  updateRequest: updatePendingRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeclineRequestModal);

@@ -1,15 +1,15 @@
 import {ADD_NOTIFICATION, REMOVE_NOTIFICATION} from "./types";
 
 const initialState = {
-  notifications: 0
+  notifications: false
 };
 
 export const notificationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
-      return {...state, notifications: state.notifications + 1};
+      return {...state, notifications: true};
     case REMOVE_NOTIFICATION:
-      return {...state, notifications: 0};
+      return {...state, notifications: false};
     default: return state;
   }
 };

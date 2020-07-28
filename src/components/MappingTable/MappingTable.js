@@ -7,9 +7,10 @@ import {connect} from "react-redux";
 import ViewMatchesModal from "../ViewMatchesModal/ViewMatchesModal";
 import Button from "../Button/Button";
 import SearchField from "../SearchField/SearchField";
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import Status from "../Status/Status";
 import ActivationStatus from "../ActivationStatus/ActivationStatus";
+import {Redirect} from "react-router";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -18,6 +19,9 @@ function useQuery() {
 const MappingTable = ({openModal, terminologyMapData}) => {
   const [tableFilter, setTableFilter] = useState(null);
   let query = useQuery();
+  let { terminologyId } = useParams();
+
+  const mappingData = terminologyMapData.find(item => item.terminologyId === terminologyId);
 
   const mappingColumns = React.useMemo(
     () =>  [
@@ -60,7 +64,7 @@ const MappingTable = ({openModal, terminologyMapData}) => {
           if(original.status.code === 2) {
             return (
               <div className='actions'>
-                <button className='actions__btn' onClick={() => openModal(original)}>View matches</button>
+                <button className='actions__btn' onClick={() => openModal({codeData: original, terminologyData: {terminologyId: mappingData.terminologyId}})}>View matches</button>
               </div>
             )
           } else {
@@ -72,13 +76,15 @@ const MappingTable = ({openModal, terminologyMapData}) => {
     []
   );
 
+  if(!mappingData) return <Redirect to={'/terminology-managements'}/>;
+
   const tableData = () => {
     const searchParams = query.get('search');
-    terminologyMapData.filter(item => item.localCodeDescription.includes(searchParams));
+    mappingData.data.filter(item => item.localCodeDescription.includes(searchParams));
     if(tableFilter === null) {
-      return terminologyMapData;
+      return mappingData.data;
     } else {
-      return terminologyMapData.filter(item => {
+      return mappingData.data.filter(item => {
         return item.status.code === tableFilter
       });
     }

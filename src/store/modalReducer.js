@@ -6,7 +6,9 @@ import {
   OPEN_VIEW_MATCHES_MODAL,
   CLOSE_VIEW_MATCHES_MODAL,
   OPEN_DECLINE_REQUEST_MODAL,
-  CLOSE_DECLINE_REQUEST_MODAL
+  CLOSE_DECLINE_REQUEST_MODAL,
+  OPEN_REQUEST_DETAILS_MODAL,
+  CLOSE_REQUEST_DETAILS_MODAL,
 } from "./types";
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
   currentCode: null,
   isViewMatchesModalOpen: false,
   viewMatchesModalData: '',
-  isDeclineRequestModalOpen: false
+  isDeclineRequestModalOpen: false,
+  isRequestDetailsModalOpen: false
 };
 
 export const modalReducer = (state = initialState, action) => {
@@ -37,6 +40,10 @@ export const modalReducer = (state = initialState, action) => {
       return {...state, isDeclineRequestModalOpen: true};
     case CLOSE_DECLINE_REQUEST_MODAL:
       return {...state, isDeclineRequestModalOpen: false};
+    case OPEN_REQUEST_DETAILS_MODAL:
+      return {...state, isRequestDetailsModalOpen: true};
+    case CLOSE_REQUEST_DETAILS_MODAL:
+      return {...state, isRequestDetailsModalOpen: false};
     default: return state;
   }
 };

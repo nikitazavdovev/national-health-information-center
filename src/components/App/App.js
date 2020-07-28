@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Redirect, Route, Switch} from "react-router-dom";
 
 import './App.css';
@@ -15,9 +15,17 @@ import SearchPage from "../../pages/SearchPage/SearchPage";
 import LoginPage from "../../pages/LoginPage/LoginPage";
 import NationalTerminologiesPage from "../../pages/NationalTerminologiesPage/NationalTerminologiesPage";
 import {connect} from "react-redux";
+import {addNotification, removeNotification} from '../../store/actions'
 
-const App = ({isUserLoggedIn, userRole}) => {
+const App = ({isUserLoggedIn, user, addNotification, removeNotification, pendingRequests}) => {
   let [isMenuOpen, setMenuIsOpen] = useState(false);
+
+  useEffect(() => {
+    removeNotification();
+    if(pendingRequests.find(request => request.organizationId === user.organizationId && request.approverRole === user.role)) {
+      addNotification()
+    }
+  },[user]);
 
   const menuToggle = () => {
     setMenuIsOpen(isMenuOpen = !isMenuOpen);
@@ -39,7 +47,7 @@ const App = ({isUserLoggedIn, userRole}) => {
                   <Route path='/dashboard'>
                     <DashboardPage />
                   </Route>
-                  {userRole !== 'admin' &&
+                  {user.type !== 'admin' &&
                     <Route path='/national-terminologies'>
                       <NationalTerminologiesPage />
                     </Route>
@@ -69,13 +77,19 @@ const App = ({isUserLoggedIn, userRole}) => {
       </Switch>
     </div>
   );
-}
+};
+
+const mapDispatchToProps = {
+  addNotification: addNotification,
+  removeNotification: removeNotification
+};
 
 const mapStateToProps = state => {
   return {
     isUserLoggedIn: state.user.isLoggedIn,
-    userRole: state.user.role
+    user: state.user,
+    pendingRequests: state.pendingRequest.allRequests
   }
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

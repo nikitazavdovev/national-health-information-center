@@ -19,7 +19,7 @@ import Status from "../../components/Status/Status";
 import NewTerminology from "../../components/NewTerminology/NewTerminology";
 import MappingTable from "../../components/MappingTable/MappingTable";
 
-const TerminologyManagementsPage = ({adminTerminologies, userTerminologies, openNewStandardModal, userRole}) => {
+const TerminologyManagementsPage = ({adminTerminologies, userTerminologies, openNewStandardModal, userType}) => {
   const versionsList = [{value: '1.0.0', id: 1}, {value: '1.0.1', id: 2}, {value: '2.0.0', id: 3}];
 
   let { url, path } = useRouteMatch();
@@ -61,10 +61,10 @@ const TerminologyManagementsPage = ({adminTerminologies, userTerminologies, open
         Header: 'Action',
         accessor: 'action',
         disableSortBy: true,
-        Cell: ({cell: {row: {original: {terminologyName}}}}) => (
+        Cell: ({cell: {row: {original: {id}}}}) => (
           <div className='actions'>
-            <Link to={`${url}/terminology/${terminologyName}`} className='actions__btn' >View</Link>
-            <TableDownloadBtn terminology={terminologyName} versionsList={versionsList}/>
+            <Link to={`${url}/terminology/${id}`} className='actions__btn' >View</Link>
+            <TableDownloadBtn terminology={id} versionsList={versionsList}/>
           </div>
         )
       }
@@ -100,10 +100,10 @@ const TerminologyManagementsPage = ({adminTerminologies, userTerminologies, open
         Header: 'Action',
         accessor: 'action',
         disableSortBy: true,
-        Cell: ({cell: {row: {original: {localTerminologyName}}}}) => (
+        Cell: ({cell: {row: {original: {id}}}}) => (
           <div className='actions'>
-            <Link to={`${url}/terminology/${localTerminologyName}`} className='actions__btn' >View</Link>
-            <TableDownloadBtn terminology={localTerminologyName} versionsList={[]}/>
+            <Link to={`${url}/terminology/${id}`} className='actions__btn' >View</Link>
+            <TableDownloadBtn terminology={id} versionsList={[]}/>
           </div>
         )
       }
@@ -113,34 +113,39 @@ const TerminologyManagementsPage = ({adminTerminologies, userTerminologies, open
 
   return (
     <div className='page page--terminology-managements'>
-      <h1 className='page__title'>Terminology Managements</h1>
-      <div className="page__right-btn">
-        <Button onClick={() => openNewStandardModal({basicPath: path})}>
-          <span className='icon icon-plus' />
-          {userRole === 'admin' ? 'Add new Standard' : 'Upload local Terminology'}
-        </Button>
-      </div>
-      <div className='page__table-wrap'>
       <Switch>
         <Route exact path={path}>
+          <h1 className='page__title'>Terminology Managements</h1>
+          <div className="page__right-btn">
+            <Button onClick={() => openNewStandardModal({basicPath: path})}>
+              <span className='icon icon-plus' />
+              {userType === 'admin' ? 'Add new Standard' : 'Upload local Terminology'}
+            </Button>
+          </div>
+          <div className='page__table-wrap'>
           <Table
             onExportToExcel={onExportToExcel}
-            columns={userRole === 'admin' ? terminologiesListColumnsAdmin : terminologiesListColumnsUser}
-            data={userRole === 'admin' ? adminTerminologies : userTerminologies}
+            columns={userType === 'admin' ? terminologiesListColumnsAdmin : terminologiesListColumnsUser}
+            data={userType === 'admin' ? adminTerminologies : userTerminologies}
           />
+          </div>
         </Route>
-        <Route path={`${path}/terminology/:terminologyName`}>
-          {userRole === 'admin' ?
+        <Route path={`${path}/terminology/:terminologyId`}>
+          <h1 className='page__title'>View Terminology</h1>
+          <div className='page__table-wrap'>
+          {userType === 'admin' ?
             <Terminology versionsList={versionsList} onExportToExcel={onExportToExcel}/> :
             <MappingTable />
           }
-
+          </div>
         </Route>
         <Route path={`${path}/newTerminology`}>
-          <NewTerminology />
+          <h1 className='page__title'>Add New Terminology</h1>
+          <div className='page__table-wrap'>
+            <NewTerminology />
+          </div>
         </Route>
       </Switch>
-      </div>
       <AddNewStandardModal />
       <ViewCodeModal />
     </div>
@@ -155,7 +160,7 @@ const mapStateToProps = state => {
   return {
     adminTerminologies: state.terminology.adminTerminologies,
     userTerminologies: state.terminology.userTerminologies,
-    userRole: state.user.role
+    userType: state.user.type
   }
 };
 

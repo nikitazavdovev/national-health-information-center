@@ -17,13 +17,13 @@ function useQuery() {
 }
 
 const Terminology = (props) => {
-  const {versionsList, onExportToExcel, userRole} = props;
+  const {versionsList, onExportToExcel, userType, terminologiesList} = props;
   const [terminologyVersion, setTerminologyVersion] = useState(versionsList[0]);
   const [tableFilter, setTableFilter] = useState('active');
-  let { terminologyName } = useParams();
+  let { terminologyId } = useParams();
   let query = useQuery();
 
-  const terminologyData = db.getAll(terminologyName);
+  const terminologyData = db.getAll(terminologyId, terminologiesList);
 
   const terminologyCodesColumns = React.useMemo(
     () =>  [
@@ -70,7 +70,7 @@ const Terminology = (props) => {
     ],
     []
   );
-  if (userRole === 'admin') {
+  if (userType === 'admin') {
     terminologyCodesColumns.splice(6, 0,
       {
         Header: 'OrgMapped',
@@ -101,7 +101,7 @@ const Terminology = (props) => {
   return (
     <>
       <div className='table__controls'>
-        {userRole === 'admin' &&
+        {userType === 'admin' &&
         <>
         <Dropdown
           list={versionsList}
@@ -138,7 +138,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
   return {
-    userRole: state.user.role
+    userType: state.user.type,
+    terminologiesList: state.terminology.adminTerminologies
   }
 };
 

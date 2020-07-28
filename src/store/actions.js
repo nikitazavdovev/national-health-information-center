@@ -18,7 +18,14 @@ import {
   ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   OPEN_DECLINE_REQUEST_MODAL,
-  CLOSE_DECLINE_REQUEST_MODAL
+  CLOSE_DECLINE_REQUEST_MODAL,
+  APPROVE_CODE,
+  DECLINE_CODE,
+  OPEN_REQUEST_DETAILS_MODAL,
+  CLOSE_REQUEST_DETAILS_MODAL,
+  ADD_REQUEST,
+  REMOVE_REQUEST,
+  UPDATE_REQUEST
 } from "./types";
 
 export function openNewStandardModal({basicPath}) {
@@ -63,6 +70,17 @@ export function openDeclineRequestModal(code) {
 export function closeDeclineRequestModal() {
   return {
     type: CLOSE_DECLINE_REQUEST_MODAL
+  }
+}
+export function openRequestDetailsModal(code) {
+  return {
+    type: OPEN_REQUEST_DETAILS_MODAL,
+    payload: code
+  }
+}
+export function closeRequestDetailsModal() {
+  return {
+    type: CLOSE_REQUEST_DETAILS_MODAL
   }
 }
 
@@ -110,6 +128,19 @@ export function sendTerminologyCodeForApproval(codeData, ) {
     payload: codeData
   }
 }
+export function approveCode(codeData) {
+  return {
+    type: APPROVE_CODE,
+    payload: codeData
+  }
+}
+export function declineCode(codeData) {
+  return {
+    type: DECLINE_CODE,
+    payload: codeData
+  }
+}
+
 export function userLogin(user) {
   return {
     type: USER_LOGIN,
@@ -130,5 +161,24 @@ export function addNotification() {
 export function removeNotification() {
   return {
     type: REMOVE_NOTIFICATION
+  }
+}
+
+export function addPendingRequest(requestData) {
+  return {
+    type: ADD_REQUEST,
+    payload: requestData
+  }
+}
+export function removePendingRequest(requestData) {
+  return {
+    type: REMOVE_REQUEST,
+    payload: requestData
+  }
+}
+export function updatePendingRequest(requestData) {
+  return {
+    type: UPDATE_REQUEST,
+    payload: requestData
   }
 }

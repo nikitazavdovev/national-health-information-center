@@ -5,7 +5,7 @@ import Dropdown from "../Dropdown/Dropdown";
 import Input from "../Input/Input";
 import DropZone from "../DropZone/DropZone";
 
-const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userRole}) => {
+const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userType}) => {
 
   const [fields, changeFieldValue] = useState({
     standardName: '',
@@ -76,7 +76,7 @@ const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userRole}) => {
 
   return (
     <form className='form'>
-      {userRole !== 'admin' &&
+      {userType !== 'admin' &&
         <div className='form__divider'>
           <div className="form__divider-text">
             Select national terminology to be mapped to
@@ -95,7 +95,7 @@ const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userRole}) => {
         onSelect={onDropdownSelect}
         required
       />
-      {userRole !== 'admin' &&
+      {userType !== 'admin' &&
       <Dropdown
         list={terminologiesList}
         placeholder={'Select terminology'}
@@ -109,7 +109,7 @@ const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userRole}) => {
         required
       />
       }
-      {userRole !== 'admin' &&
+      {userType !== 'admin' &&
         <div className='form__divider'>
           <div className="form__divider-text">
             Enter local terminology data
@@ -121,7 +121,7 @@ const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userRole}) => {
         wrapClassName={'form__block'}
         titleClassName={'form__block-title'}
         inputClassName={'form__block-input'}
-        title={userRole === 'admin' ? 'Standard name' : 'Local terminology name'}
+        title={userType === 'admin' ? 'Standard name' : 'Local terminology name'}
         required
         id={'standard-name'}
         placeholder={'standard name'}
@@ -134,7 +134,7 @@ const AddNewStandardForm = ({onFormSubmit, submitFromOutside, userRole}) => {
         wrapClassName={'form__block'}
         titleClassName={'form__block-title'}
         inputClassName={'form__block-input form__block-input--textarea'}
-        title={userRole === 'admin' ? 'Description' : 'Local terminology description'}
+        title={userType === 'admin' ? 'Description' : 'Local terminology description'}
         required
         id={'standardDescription'}
         onChange={onInputChange}

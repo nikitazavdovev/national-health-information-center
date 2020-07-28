@@ -6,15 +6,20 @@ import {connect} from "react-redux";
 import {Link, useRouteMatch} from "react-router-dom";
 import {Route, Switch} from "react-router";
 import RequestDetails from "../../components/RequestDetails/RequestDetails";
+import Status from "../../components/Status/Status";
+import {removeNotification} from '../../store/actions'
 
-const PendingRequestsPage = ({codesForApproval}) => {
+const PendingRequestsPage = ({pendingRequests, removeNotification, user, allTerminologies}) => {
   let { url, path } = useRouteMatch();
+
+  //Clear notifications
+  removeNotification();
 
   const pendingRequestsTableColumns = React.useMemo(
     () =>  [
       {
         Header: 'User',
-        accessor: 'user',
+        accessor: 'senderName',
         width: 100,
       },
       {
@@ -32,36 +37,56 @@ const PendingRequestsPage = ({codesForApproval}) => {
         accessor: 'localCodeDescription',
       },
       {
+        Header: 'Request Type',
+        accessor: 'requestType',
+        Cell: ({cell}) => (
+          <Status value={cell.value}/>
+        )
+      },
+      {
         Header: 'Action',
         accessor: 'action',
         width: 110,
-        Cell: ({row}) => (
-          <div className='actions'>
-            <Link to={`${url}/request/${row.original.requestId}`} className='actions__btn'>View Details</Link>
-          </div>
-        )
+        Cell: ({row}) => {
+          return (
+            <div className='actions'>
+              <Link to={`${url}/request/${row.original.requestId}`} className='actions__btn'>View Details</Link>
+            </div>
+          )
+        }
       }
     ],
     []
   );
 
-  const data = codesForApproval.map(code => {
+  const data = pendingRequests.filter(request => {
+    if(request.organizationId === user.organizationId && request.approverRole === user.role) {
+      return request.approverName ? request.approverName === user.name : true;
+    }
+    return false;
+  });
+  const dataToDisplay = data.map(item => {
     return {
-      ...code,
-      ...code.data
+      requestId: item.requestId,
+      senderName: item.senderName,
+      terminologyName: allTerminologies.find(terminology => terminology.id === item.payload.terminologyId).localTerminologyName,
+      localCodeId: item.payload.data.localCodeId,
+      localCodeDescription: item.payload.data.localCodeDescription,
+      requestType: item.requestType,
+
     }
   });
 
   return (
     <div className='page page--terminology-managements'>
-      <h1 className='page__title'>Pending Requests</h1>
       <Switch>
         <Route path={path} exact>
-          {codesForApproval.length ?
+          <h1 className='page__title'>Pending Requests</h1>
+          {data.length ?
             <div className='page__table-wrap'>
               <Table
                 columns={pendingRequestsTableColumns}
-                data={data}
+                data={dataToDisplay}
               />
             </div> :
             <h2 className='page__message'>There is no requests yet.</h2>
@@ -75,10 +100,16 @@ const PendingRequestsPage = ({codesForApproval}) => {
   )
 };
 
+const mapDispatchToProps = {
+  removeNotification: removeNotification
+};
+
 const mapStateToProps = state => {
   return {
-    codesForApproval: state.terminology.codesForApproval
+    pendingRequests: state.pendingRequest.allRequests,
+    user: state.user,
+    allTerminologies: state.terminology.userTerminologies
   }
 };
 
-export default connect(mapStateToProps, null)(PendingRequestsPage);
+export default connect(mapStateToProps, mapDispatchToProps)(PendingRequestsPage);

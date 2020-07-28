@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import Dropdown from "../Dropdown/Dropdown";
 import Status from "../Status/Status";
 
-const ViewCodeModal = ({isModalOpen, closeModal, currentCode, userRole}) => {
+const ViewCodeModal = ({isModalOpen, closeModal, currentCode, userType}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [isActive, setIsActive] = useState(isModalOpen && currentCode.status.code === 1);
   const [selectedVersion, setSelectedVersion] = useState({});
@@ -45,7 +45,7 @@ const ViewCodeModal = ({isModalOpen, closeModal, currentCode, userRole}) => {
       <div className="modal__body">
         <div className="code">
           <div className='code__wrap'>
-            {userRole === 'admin' &&
+            {userType === 'admin' &&
             <div className="code__block code__version half">
               <h3>Version</h3>
               {isEdit ?
@@ -61,7 +61,7 @@ const ViewCodeModal = ({isModalOpen, closeModal, currentCode, userRole}) => {
               }
             </div>
             }
-            <div className={`code__block code__status ${userRole === 'admin' ? 'half' : 'full'}`}>
+            <div className={`code__block code__status ${userType === 'admin' ? 'half' : 'full'}`}>
               <h3>Status</h3>
               <Status value={isActive ? {code: 1, message: 'active'} : {code: 0, message: 'inactive'}} />
               {isEdit && <button onClick={()=> setIsActive(!isActive)} className='code__status-toggle'>{isActive ? 'deactivate' : 'activate'}</button>}
@@ -83,7 +83,7 @@ const ViewCodeModal = ({isModalOpen, closeModal, currentCode, userRole}) => {
               <p>{currentCode.category}</p>
             </div>
           </div>
-          {userRole === 'admin' &&
+          {userType === 'admin' &&
             <div className='code__buttons'>
               {isEdit ?
                 <>
@@ -119,7 +119,7 @@ const mapStateToProps = state => {
   return {
     isModalOpen: state.modal.isViewCodeModalOpen,
     currentCode: state.modal.currentCode,
-    userRole: state.user.role
+    userType: state.user.type
   }
 };
 

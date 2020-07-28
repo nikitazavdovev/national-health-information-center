@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 import {useAlert} from "react-alert";
 import {isObjectEmpty} from "../../utils/helpers";
 
-const AddNewStandardModal = ({isModalOpen, closeModal, basicPath, addNewTerminologyFormData, userRole}) => {
+const AddNewStandardModal = ({isModalOpen, closeModal, basicPath, addNewTerminologyFormData, userType}) => {
 
   const [isFormSubmitted, submitForm] = useState(false);
   let history = useHistory();
@@ -23,7 +23,7 @@ const AddNewStandardModal = ({isModalOpen, closeModal, basicPath, addNewTerminol
       if(isObjectEmpty(formData.standardCategory)) reject();
       if(!formData.standardName) reject();
       if(!formData.standardDescription) reject();
-      if(userRole !== 'admin' && isObjectEmpty(formData.standardTerminology)) reject();
+      if(userType !== 'admin' && isObjectEmpty(formData.standardTerminology)) reject();
       resolve(formData)
     })
   };
@@ -44,10 +44,10 @@ const AddNewStandardModal = ({isModalOpen, closeModal, basicPath, addNewTerminol
   return (
     <Modal modalIsOpen={isModalOpen} closeModal={closeModal}>
       <div className='modal__header'>
-        {userRole === 'admin' ? 'Add new standart' : 'Upload Local Terminology'}
+        {userType === 'admin' ? 'Add new standart' : 'Upload Local Terminology'}
       </div>
       <div className="modal__body">
-        <AddNewStandardForm onFormSubmit={onFormSubmit} submitFromOutside={isFormSubmitted} userRole={userRole}/>
+        <AddNewStandardForm onFormSubmit={onFormSubmit} submitFromOutside={isFormSubmitted} userType={userType}/>
       </div>
       <div className="modal__footer">
         <div className='modal__footer__buttons'>
@@ -63,7 +63,7 @@ const mapStateToProps = state => {
   return {
     isModalOpen: state.modal.isNewStandardModalOpen,
     basicPath: state.modal.basicPath,
-    userRole: state.user.role
+    userType: state.user.type
   }
 };
 

@@ -10,7 +10,7 @@ import {useAlert} from "react-alert";
 
 const LoginPage = ({userLogin, isUserLoggedIn}) => {
   let history = useHistory();
-  const alert = useAlert()
+  const alert = useAlert();
 
   const [formData, setFormData] = useState({
     login: '',

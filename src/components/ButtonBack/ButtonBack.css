@@ -1,0 +1,12 @@
+.button-back {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--main-color);
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  box-shadow: 0 0 4px 1px rgba(0,0,0,0.2);
+}
+.button-back__icon {
+  margin-right: 8px;
+}

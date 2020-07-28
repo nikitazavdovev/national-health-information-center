@@ -28,6 +28,9 @@ button {
 :root {
   --main-color: #2C2F73;
   --secondary-color: #4EC2C9;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #e20009;
 }
 
 /*DINNextLTArabic font*/
@@ -158,16 +161,22 @@ button {
 .icon-double_arrow:before {
    content: "\e90d";
  }
+.icon-arrow-left2:before {
+  content: "\ea40";
+}
+.icon-navigation-more:before {
+  content: "\e90e";
+}
 
 .icon {
   cursor: pointer;
 }
 .color--success {
-  color: #28a745;
+  color: var(--success-color);
 }
 .color--warning {
-  color: #ffc107;
+  color: var(--warning-color);
 }
 .color--danger {
-  color: #e20009
+  color: var(--danger-color)
 }

@@ -30,6 +30,8 @@
   font-size: 18px;
 }
 .modal__body {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   padding: 14px 14px 0 14px;
 }
@@ -46,6 +48,15 @@
 }
 .modal__footer__buttons :first-child {
   margin-left: 0;
+}
+.modal__info-block {
+  display: block;
+  margin: 0 auto 14px;
+  font-size: 16px;
+  padding: 4px 8px;
+  color: var(--warning-color);
+  border: 1px dashed var(--warning-color);
+  border-radius: 6px;
 }
 
 @media (min-width: 425px) {

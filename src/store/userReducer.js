@@ -1,11 +1,14 @@
 import {
   USER_LOGIN,
-  USER_LOGOUT} from "./types";
+  USER_LOGOUT
+} from "./types";
 
 const initialState = {
   role: '',
+  type: '',
   isLoggedIn: false,
-  name: ''
+  name: '',
+  organizationId: ''
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -13,9 +16,8 @@ export const userReducer = (state = initialState, action) => {
     case USER_LOGIN:
       return {
         ...state,
+        ...action.payload,
         isLoggedIn: true,
-        role: action.payload.role,
-        name: action.payload.name
       };
     case USER_LOGOUT:
       return initialState;

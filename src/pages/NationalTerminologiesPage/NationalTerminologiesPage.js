@@ -10,7 +10,7 @@ import AddNewStandardModal from "../../components/AddNewStandardModal/AddNewStan
 import ViewCodeModal from "../../components/ViewCodeModal/ViewCodeModal";
 import {connect} from "react-redux";
 
-const NationalTerminologiesPage = ({allTerminologies, userRole}) => {
+const NationalTerminologiesPage = ({allTerminologies}) => {
   let { url, path } = useRouteMatch();
 
   const terminologiesListColumns = React.useMemo(
@@ -46,10 +46,10 @@ const NationalTerminologiesPage = ({allTerminologies, userRole}) => {
         Header: 'Action',
         accessor: 'action',
         disableSortBy: true,
-        Cell: ({cell: {row: {original: {terminologyName, terminologyVersion}}}}) => (
+        Cell: ({cell: {row: {original: {id}}}}) => (
           <div className='actions'>
-            <Link to={`${url}/terminology/${terminologyName}`} className='actions__btn' >View</Link>
-            <TableDownloadBtn terminology={terminologyName} versionsList={[]}/>
+            <Link to={`${url}/terminology/${id}`} className='actions__btn' >View</Link>
+            <TableDownloadBtn terminology={id} versionsList={[]}/>
           </div>
         )
       }
@@ -72,7 +72,7 @@ const NationalTerminologiesPage = ({allTerminologies, userRole}) => {
               data={allTerminologies}
             />
           </Route>
-          <Route path={`${path}/terminology/:terminologyName`}>
+          <Route path={`${path}/terminology/:terminologyId`}>
             <Terminology versionsList={[]} onExportToExcel={onExportToExcel}/>
           </Route>
         </Switch>
@@ -86,7 +86,7 @@ const NationalTerminologiesPage = ({allTerminologies, userRole}) => {
 const mapStateToProps = state => {
   return {
     allTerminologies: state.terminology.adminTerminologies,
-    userRole: state.user.role
+    userType: state.user.type
   }
 };
 

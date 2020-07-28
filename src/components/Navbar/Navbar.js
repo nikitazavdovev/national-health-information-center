@@ -7,7 +7,7 @@ import NavbarItem from "../NavbarItem/NavbarItem";
 import poweredByLogo from '../../assets/images/poweredBy_logo.png';
 import {connect} from "react-redux";
 
-const Navbar = ({isMenuOpen, userRole}) => {
+const Navbar = ({isMenuOpen, userType}) => {
   const menuItems = [
     {
       title: 'Dashboard',
@@ -41,7 +41,7 @@ const Navbar = ({isMenuOpen, userRole}) => {
     }
   ];
 
-  if(userRole !== 'admin') menuItems.splice(1, 0,
+  if(userType !== 'admin') menuItems.splice(1, 0,
     {
       title: 'National Terminologies',
       icon: 'sphere',
@@ -67,7 +67,7 @@ const Navbar = ({isMenuOpen, userRole}) => {
 const mapStateToProps = state => {
   return {
     isMenuOpen: state.menu.isMainMenuOpen,
-    userRole: state.user.role
+    userType: state.user.type
   }
 };
 

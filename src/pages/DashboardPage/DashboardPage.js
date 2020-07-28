@@ -6,8 +6,12 @@ import DashboardTile from "../../components/DashboardTile/DashboardTile";
 import DashboardCharts from "../../components/DashboardCharts/DashboardCharts";
 import {connect} from "react-redux";
 
-const DashboardPage = ({codesForApproval}) => {
+const DashboardPage = ({codesForApproval, user}) => {
+  const userCodesForApproval = codesForApproval.filter(code => code.organizationId === user.organizationId && code.approverRole === user.role);
+
+
   const pageTiles = [
+
     {
       title: 'Terminology Managements',
       icon: 'settings',
@@ -17,7 +21,7 @@ const DashboardPage = ({codesForApproval}) => {
       title: 'Pending Request',
       icon: 'notification',
       link: '/pending-requests',
-      notification: codesForApproval.length
+      notification: userCodesForApproval.length
     },
     {
       title: 'Reports',
@@ -53,7 +57,8 @@ const DashboardPage = ({codesForApproval}) => {
 
 const mapStateToProps = state => {
   return {
-    codesForApproval: state.terminology.codesForApproval
+    codesForApproval: state.pendingRequest.allRequests,
+    user: state.user,
   }
 }
 

@@ -2,21 +2,34 @@ import makeData from "./makeData";
 
 const users = [
   {
-    login: 'user',
+    login: 'user_editor',
     password: '12345',
-    role: 'user',
+    type: 'user',
+    role: 'editor',
+    organizationId: '0',
     name: 'User 123'
+  },
+  {
+    login: 'user_reviewer',
+    password: '12345',
+    type: 'user',
+    role: 'reviewer',
+    organizationId: '0',
+    name: 'User reviewer'
   },
   {
     login: 'admin',
     password: '12345',
-    role: 'admin',
+    type: 'admin',
     name: 'Main admin'
   },
 ];
 
 export const db = {
-  getAll: (terminologyName) => makeData(terminologyName, 10000),
+  getAll: (terminologyId, terminologiesList) => {
+    const terminologyName = terminologiesList.find(item => item.id === terminologyId).terminologyName;
+    return makeData(terminologyName, 10000)
+  },
 };
 
 export const userAuthenticate = (user) => {

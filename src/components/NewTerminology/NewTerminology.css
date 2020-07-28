@@ -38,3 +38,11 @@
   font-weight: 600;
   color: var(--main-color);
 }
+.info__block button {
+  display: block;
+  border: 1px solid var(--main-color);
+  border-radius: 8px;
+  padding: 0px 8px;
+  bottom: 0;
+  left: 0;
+}

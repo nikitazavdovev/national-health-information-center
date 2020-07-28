@@ -8,7 +8,7 @@ const Notification = ({notifications}) => {
     <div className='notification'>
       <button className='notification__btn'>
         <span className="icon icon-bell" />
-        {notifications > 0 &&
+        {notifications &&
           <span className="notification__indicator" />
         }
       </button>

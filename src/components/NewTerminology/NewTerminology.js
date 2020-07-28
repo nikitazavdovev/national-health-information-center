@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import {useAlert} from "react-alert";
 import {removeNewTerminologyFormData, addNewTerminologyAdmin, addNewTerminologyUser} from "../../store/actions";
 
-const NewTerminology = ({newTerminology, basicPath, clearTerminology, addNewTerminologyAdmin, addNewTerminologyUser, userRole}) => {
+const NewTerminology = ({newTerminology, basicPath, clearTerminology, addNewTerminologyAdmin, addNewTerminologyUser, userType}) => {
   let history = useHistory();
   const alert = useAlert();
 
@@ -28,7 +28,7 @@ const NewTerminology = ({newTerminology, basicPath, clearTerminology, addNewTerm
   );
   const onConfirm = () => {
     let alertMsg;
-      if(userRole === 'admin') {
+      if(userType === 'admin') {
         addNewTerminologyAdmin(newTerminology);
         alertMsg = 'Upload successful.'
       } else {
@@ -49,18 +49,8 @@ const NewTerminology = ({newTerminology, basicPath, clearTerminology, addNewTerm
   };
 
   if(!newTerminology) {
-    // return <Redirect to='/'/>
-    newTerminology = {
-      standardCategory: {
-        value: 'category'
-      },
-      standardTerminology: {
-        value: 'terminology'
-      },
-      standardName: 'name',
-      standardDescription: 'description',
-      fileData: []
-    }
+    return <Redirect to='/'/>
+
   }
 
   return (
@@ -70,18 +60,18 @@ const NewTerminology = ({newTerminology, basicPath, clearTerminology, addNewTerm
           <h3>Category</h3>
           <p>{newTerminology.standardCategory.value}</p>
         </div>
-        {userRole !== 'admin' &&
+        {userType !== 'admin' &&
           <div className="info__block">
             <h3>Terminology</h3>
             <p>{newTerminology.standardTerminology.value}</p>
           </div>
         }
         <div className="info__block">
-          <h3>{userRole === 'admin' ? 'Standard name' : 'Local terminology name'}</h3>
+          <h3>{userType === 'admin' ? 'Standard name' : 'Local terminology name'}</h3>
           <p>{newTerminology.standardName}</p>
         </div>
         <div className="info__block">
-          <h3>{userRole === 'admin' ? 'Description' : 'Local terminology description'}</h3>
+          <h3>{userType === 'admin' ? 'Description' : 'Local terminology description'}</h3>
           <p>{newTerminology.standardDescription}</p>
         </div>
       </div>
@@ -102,7 +92,7 @@ const mapStateToProps = state => {
   return {
     newTerminology: state.terminology.newTerminologyData,
     basicPath: state.modal.basicPath,
-    userRole: state.user.role
+    userType: state.user.type
   }
 };
 

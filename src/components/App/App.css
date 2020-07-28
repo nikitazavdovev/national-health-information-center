@@ -57,6 +57,11 @@
 .page__right-btn .button {
   width: auto;
 }
+.page__back-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
 .page__table-wrap {
   margin-top: 20px;
   background: #ffffff;

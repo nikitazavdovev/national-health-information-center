@@ -47,13 +47,19 @@
   min-height: 35px;
   display: flex;
 }
-.code-matches__list-item button {
+.code-matches__list-item > * {
   width: 100%;
   font-size: 16px;
   padding-left: 12px;
   text-align: left;
   color: var(--main-color);
   font-weight: 600;
+}
+.code-matches__list-item button[disabled] {
+  opacity: .5;
+}
+.code-matches__list-item.selected button[disabled] {
+  opacity: 1;
 }
 .code-matches__list-item.selected {
   background-color: rgba(0, 0, 0, 0.05);
